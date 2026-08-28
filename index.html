@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Quick Bytes | Smart Campus Canteen</title>
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<header class="navbar">
+  <a class="brand" href="index.html">🍽️ <b>Quick Bytes</b></a>
+  <nav>
+    <a class="active" href="index.html">Home</a>
+    <a href="menu.html">Menu</a>
+    <a href="orders.html">Orders</a>
+    <a href="profile.html">Profile</a>
+  </nav>
+  <div class="nav-actions">
+    <a href="live.html">⚡</a>
+    <a href="tray.html">🛒 <span class="badge" data-cart-count>0</span></a>
+  </div>
+</header>
+
+<main>
+
+<section class="hero">
+  <div class="hero-text">
+    <span class="eyebrow">SMART CAMPUS CANTEEN</span>
+    <h1>Your Food.<br><span>Your Table.</span><br>Zero Queue.</h1>
+    <p>Order from your campus table, skip the queue and get your food delivered directly to your dining spot.</p>
+    <div class="actions">
+      <a class="btn primary" href="menu.html">Explore Menu →</a>
+      <a class="btn secondary" href="live.html">⚡ Canteen Live</a>
+    </div>
+  </div>
+
+  <div class="hero-art">
+    <div class="floating-card">🔥 <b>Hot & Fresh</b><small>Prepared now</small></div>
+    <div class="food-orb">🍗</div>
+    <div class="floating-card bottom">🪑 <b>SeatSync Active</b><small id="heroTable">Table T-12</small></div>
+  </div>
+</section>
+
+<section class="container">
+  <div class="seat-card">
+    <div class="big-icon">🪑</div>
+    <div>
+      <small>YOUR DINING SPOT</small>
+      <h3 id="currentTable">Table T-12</h3>
+      <p>Food will be delivered here.</p>
+    </div>
+    <button class="btn outline" onclick="changeTable()">Change</button>
+  </div>
+</section>
+
+<section class="container">
+  <div class="section-head">
+    <div><span class="eyebrow">EXPLORE</span><h2>Quick Categories</h2></div>
+    <a href="menu.html">See All →</a>
+  </div>
+
+  <div class="category-grid">
+    <a class="category" href="menu.html?category=Rice"><div>🍚</div><h3>Rice</h3><p>Biryani & variety rice</p></a>
+    <a class="category" href="menu.html?category=Meals"><div>🍛</div><h3>Meals</h3><p>Complete campus meals</p></a>
+    <a class="category" href="menu.html?category=Puffs"><div>🥐</div><h3>Puffs</h3><p>Quick crispy bites</p></a>
+    <a class="category" href="menu.html?category=Drinks"><div>🧃</div><h3>Drinks</h3><p>Chilled bottled drinks</p></a>
+  </div>
+</section>
+
+<section class="container">
+  <div class="section-head">
+    <div><span class="eyebrow">SMART PICK</span><h2>Popular Right Now</h2></div>
+  </div>
+
+  <div class="featured">
+    <div class="featured-img">🍗</div>
+    <div>
+      <span class="tag">BEST SELLER</span>
+      <h2>Chicken Biryani</h2>
+      <p>Aromatic rice with tender chicken, specially prepared for campus dining.</p>
+      <div class="price-row">
+        <strong>₹80</strong>
+        <button class="btn primary" onclick="addToCart('biryani')">+ Add to Smart Tray</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="container">
+  <div class="section-head">
+    <div><span class="eyebrow">CANTEEN LIVE</span><h2>Kitchen Status</h2></div>
+    <a href="live.html">Open Live →</a>
+  </div>
+  <div class="status-box">
+    <div><h3>Medium Kitchen Load</h3><p>Average preparation time is currently around 8–12 minutes.</p></div>
+    <strong>12 min</strong>
+  </div>
+</section>
+
+<section class="container">
+  <div class="section-head"><div><span class="eyebrow">BUILT FOR CAMPUS</span><h2>Why Quick Bytes?</h2></div></div>
+  <div class="feature-grid">
+    <div class="feature"><span>🪑</span><h3>SeatSync</h3><p>Send the order directly to your selected table.</p></div>
+    <div class="feature"><span>⚡</span><h3>Zero Queue</h3><p>Order while sitting instead of standing at the counter.</p></div>
+    <div class="feature"><span>📍</span><h3>Live Tracking</h3><p>Track your food from kitchen to table.</p></div>
+    <div class="feature"><span>🧠</span><h3>Smart Picks</h3><p>Discover popular campus food quickly.</p></div>
+  </div>
+</section>
+
+</main>
+
+<nav class="mobile-nav">
+<a class="active" href="index.html">⌂<span>Home</span></a>
+<a href="menu.html">☷<span>Menu</span></a>
+<a href="tray.html">🛒<span>Tray</span></a>
+<a href="orders.html">◷<span>Orders</span></a>
+<a href="profile.html">○<span>Profile</span></a>
+</nav>
+
+<div id="toast" class="toast"></div>
+<script src="js/app.js"></script>
+</body>
+</html>
