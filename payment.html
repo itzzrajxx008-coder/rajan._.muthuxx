@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Payment | Quick Bytes</title>
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<header class="navbar">
+<a class="brand" href="index.html">🍽️ <b>Quick Bytes</b></a>
+</header>
+
+<main class="container page">
+
+<div class="page-title">
+<a href="checkout.html">←</a>
+<div><span class="eyebrow">STEP 3 OF 3</span><h1>Payment</h1><p>Choose your preferred payment method.</p></div>
+</div>
+
+<div class="payment-layout">
+
+<div class="form-card">
+
+<h2>Payment Method</h2>
+
+<label class="pay-option">
+<input type="radio" name="payment" value="UPI" checked>
+<span>📱</span><div><b>UPI</b><small>Google Pay / PhonePe / Other UPI</small></div>
+</label>
+
+<label class="pay-option">
+<input type="radio" name="payment" value="Card">
+<span>💳</span><div><b>Card</b><small>Debit or credit card</small></div>
+</label>
+
+<label class="pay-option">
+<input type="radio" name="payment" value="Counter">
+<span>💵</span><div><b>Pay at Counter</b><small>Pay when collecting food</small></div>
+</label>
+
+<button id="placeOrderBtn" class="btn primary full">Pay & Place Order →</button>
+
+<p class="secure">🔒 Demo payment — no real money is charged.</p>
+
+</div>
+
+<div id="paymentSummary" class="summary-card"></div>
+
+</div>
+</main>
+
+<div id="toast" class="toast"></div>
+<script src="js/app.js"></script>
+</body>
+</html>
