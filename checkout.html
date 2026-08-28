@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Checkout | Quick Bytes</title>
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<header class="navbar">
+<a class="brand" href="index.html">🍽️ <b>Quick Bytes</b></a>
+<div class="steps"><b>1</b> Cart → <b>2</b> Details → <b>3</b> Payment</div>
+</header>
+
+<main class="container page">
+
+<div class="page-title">
+<a href="tray.html">←</a>
+<div><span class="eyebrow">STEP 2 OF 3</span><h1>Dining Details</h1><p>Tell us where to bring your order.</p></div>
+</div>
+
+<form id="checkoutForm" class="form-card">
+
+<label>Student Name</label>
+<input id="studentName" required placeholder="Enter your name">
+
+<label>Register Number</label>
+<input id="registerNo" required placeholder="Enter register number">
+
+<label>Table Number</label>
+<select id="tableNo" required>
+<option value="">Select your table</option>
+<option>T-01</option><option>T-02</option><option>T-03</option>
+<option>T-04</option><option>T-05</option><option>T-06</option>
+<option>T-07</option><option>T-08</option><option>T-09</option>
+<option>T-10</option><option>T-11</option><option>T-12</option>
+<option>T-13</option><option>T-14</option><option>T-15</option>
+</select>
+
+<label>Special Note <small>(optional)</small></label>
+<textarea id="note" placeholder="Less spicy, extra gravy, etc."></textarea>
+
+<div class="seat-card mini">
+<span>🪑</span>
+<div><b>SeatSync</b><p>Your food will be delivered to the selected table.</p></div>
+</div>
+
+<button class="btn primary full" type="submit">Continue to Payment →</button>
+
+</form>
+</main>
+
+<div id="toast" class="toast"></div>
+<script src="js/app.js"></script>
+</body>
+</html>
