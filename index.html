@@ -1,1185 +1,994 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Quick Bytes - Smart Canteen</title>
-
-<style>
-*{
-    margin:0;
-    padding:0;
-    box-sizing:border-box;
-    font-family:Arial,Helvetica,sans-serif;
-}
-
-:root{
-    --orange:#ff5a00;
-    --orange2:#ff7a00;
-    --cream:#fff6d8;
-    --light:#f7f7f7;
-    --dark:#171717;
-    --gray:#777;
-    --green:#18b96b;
-}
-
-body{
-    background:#eeeeee;
-    color:var(--dark);
-}
-
-button,input{
-    font:inherit;
-}
-
-button{
-    cursor:pointer;
-}
-
-.app{
-    width:100%;
-    max-width:430px;
-    min-height:100vh;
-    margin:auto;
-    background:#fff;
-    position:relative;
-    overflow-x:hidden;
-    box-shadow:0 0 30px rgba(0,0,0,.12);
-}
-
-header{
-    background:linear-gradient(135deg,var(--orange),#ff8500);
-    padding:22px 18px 20px;
-    color:#fff;
-    border-radius:0 0 25px 25px;
-}
-
-.brand-row{
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-}
-
-.logo{
-    display:flex;
-    align-items:center;
-    gap:9px;
-    font-size:22px;
-    font-weight:800;
-}
-
-.logo-icon{
-    background:#fff;
-    color:var(--orange);
-    width:38px;
-    height:38px;
-    border-radius:12px;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-}
-
-.profile{
-    background:#fff;
-    color:#222;
-    width:38px;
-    height:38px;
-    border-radius:50%;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    font-weight:bold;
-}
-
-.greeting{
-    margin-top:22px;
-}
-
-.greeting small{
-    opacity:.9;
-}
-
-.greeting h1{
-    font-size:24px;
-    line-height:1.15;
-    margin-top:5px;
-}
-
-.search-box{
-    background:white;
-    border-radius:15px;
-    padding:12px 15px;
-    margin-top:18px;
-    display:flex;
-    align-items:center;
-    gap:10px;
-    color:#888;
-}
-
-.search-box input{
-    border:none;
-    outline:none;
-    width:100%;
-    font-size:15px;
-}
-
-.content{
-    padding:20px 17px 100px;
-}
-
-.table-card{
-    background:var(--cream);
-    border-radius:17px;
-    padding:14px;
-    display:flex;
-    align-items:center;
-    justify-content:space-between;
-    margin-bottom:22px;
-}
-
-.table-left{
-    display:flex;
-    gap:12px;
-    align-items:center;
-}
-
-.table-icon{
-    font-size:28px;
-}
-
-.table-card small{
-    color:#777;
-}
-
-.change-btn{
-    border:0;
-    background:white;
-    color:#d85a00;
-    padding:7px 11px;
-    border-radius:10px;
-    font-size:12px;
-    font-weight:bold;
-}
-
-.section-title{
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-    margin-bottom:12px;
-}
+const FOODS = {
+
+biryani:{
+id:"biryani",
+name:"Chicken Biryani",
+price:80,
+category:"Rice",
+emoji:"🍗",
+description:"Aromatic basmati rice with tender chicken and delicious campus-style masala."
+},
+
+friedrice:{
+id:"friedrice",
+name:"Chicken Fried Rice",
+price:80,
+category:"Rice",
+emoji:"🍳",
+description:"Hot and tasty chicken fried rice prepared fresh for your campus table."
+},
+
+parotta:{
+id:"parotta",
+name:"Parotta",
+price:20,
+category:"Meals",
+emoji:"🥞",
+description:"Soft layered parotta served fresh and hot."
+},
+
+puff:{
+id:"puff",
+name:"Veg Puff",
+price:20,
+category:"Puffs",
+emoji:"🥐",
+description:"Crispy golden puff with tasty vegetable filling."
+},
 
-.section-title h2{
-    font-size:18px;
-}
-
-.section-title span{
-    color:var(--orange);
-    font-size:12px;
-    font-weight:bold;
-}
+lemon:{
+id:"lemon",
+name:"Lemon Rice",
+price:40,
+category:"Rice",
+emoji:"🍋",
+description:"Fresh lemon rice with peanuts and mild spices."
+},
 
-.categories{
-    display:flex;
-    gap:10px;
-    overflow-x:auto;
-    padding-bottom:5px;
-}
+curd:{
+id:"curd",
+name:"Curd Rice",
+price:40,
+category:"Rice",
+emoji:"🥣",
+description:"Cool and creamy curd rice, perfect for a quick campus lunch."
+},
 
-.categories::-webkit-scrollbar{
-    display:none;
-}
+tomato:{
+id:"tomato",
+name:"Tomato Rice",
+price:40,
+category:"Rice",
+emoji:"🍅",
+description:"Flavourful tomato rice prepared with fresh spices."
+},
 
-.category{
-    min-width:75px;
-    padding:12px 7px;
-    background:#fafafa;
-    border-radius:15px;
-    border:1px solid #eee;
-    text-align:center;
-}
+meals:{
+id:"meals",
+name:"Mini Veg Meals",
+price:60,
+category:"Meals",
+emoji:"🍛",
+description:"A satisfying mini meal for a quick campus lunch."
+},
 
-.category.active{
-    background:#fff0e8;
-    border:1px solid var(--orange);
-}
+juice:{
+id:"juice",
+name:"Bottled Fruit Juice",
+price:12,
+category:"Drinks",
+emoji:"🧃",
+description:"Chilled bottled fruit juice."
+},
 
-.category .cat-icon{
-    font-size:26px;
-    display:block;
-    margin-bottom:5px;
+water:{
+id:"water",
+name:"Mineral Water",
+price:10,
+category:"Drinks",
+emoji:"💧",
+description:"Chilled bottled drinking water."
 }
 
-.category span{
-    font-size:12px;
-    font-weight:bold;
-}
+};
 
-.smart-pick{
-    background:var(--cream);
-    border-radius:18px;
-    padding:14px;
-    margin:22px 0;
-}
 
-.smart-label{
-    font-weight:bold;
-    margin-bottom:10px;
+function getCart(){
+return JSON.parse(localStorage.getItem("qb_cart") || "[]");
 }
 
-.pick-card{
-    background:#fff;
-    border-radius:15px;
-    padding:10px;
-    display:flex;
-    gap:10px;
-    align-items:center;
-}
 
-.food-img{
-    width:72px;
-    height:65px;
-    object-fit:cover;
-    border-radius:13px;
+function saveCart(cart){
+localStorage.setItem("qb_cart",JSON.stringify(cart));
+updateCartCount();
 }
 
-.pick-info{
-    flex:1;
-}
 
-.pick-info h3{
-    font-size:14px;
-    margin-bottom:4px;
-}
+function updateCartCount(){
 
-.pick-info p{
-    font-size:11px;
-    color:#888;
-}
+const count=getCart().reduce((sum,item)=>sum+item.qty,0);
 
-.price{
-    color:#e84900;
-    font-weight:800;
-    margin-top:5px;
-}
+document.querySelectorAll("[data-cart-count]").forEach(el=>{
+el.textContent=count;
+});
 
-.add-btn{
-    border:none;
-    background:var(--orange);
-    color:#fff;
-    padding:9px 13px;
-    border-radius:10px;
-    font-weight:bold;
-    font-size:12px;
 }
 
-.live-card{
-    background:#eafff2;
-    border-radius:15px;
-    padding:13px;
-    display:flex;
-    align-items:center;
-    gap:10px;
-    margin-bottom:20px;
-}
 
-.live-dot{
-    width:10px;
-    height:10px;
-    background:var(--green);
-    border-radius:50%;
-}
+function showToast(message){
 
-.live-card strong{
-    font-size:13px;
-}
+const toast=document.getElementById("toast");
 
-.live-card small{
-    display:block;
-    color:#777;
-    margin-top:3px;
-}
+if(!toast)return;
 
-.status-pill{
-    margin-left:auto;
-    background:#fff0a8;
-    padding:5px 9px;
-    border-radius:10px;
-    font-size:11px;
-}
+toast.textContent=message;
+toast.classList.add("show");
 
-.food-list{
-    display:flex;
-    flex-direction:column;
-    gap:11px;
-}
+setTimeout(()=>{
+toast.classList.remove("show");
+},1800);
 
-.food-card{
-    border:1px solid #eee;
-    border-radius:16px;
-    padding:10px;
-    display:flex;
-    align-items:center;
-    gap:10px;
-    background:#fff;
 }
 
-.food-card .food-img{
-    width:70px;
-    height:65px;
-}
 
-.food-details{
-    flex:1;
-}
+function addToCart(id,qty=1){
 
-.food-details h3{
-    font-size:14px;
-}
+const food=FOODS[id];
 
-.food-details p{
-    color:#888;
-    font-size:11px;
-    margin-top:3px;
-}
+if(!food)return;
 
-.food-price{
-    color:#df4d00;
-    font-weight:bold;
-    margin-top:5px;
-}
+const cart=getCart();
 
-.bottom-nav{
-    position:fixed;
-    bottom:0;
-    width:100%;
-    max-width:430px;
-    background:#fff;
-    border-top:1px solid #eee;
-    display:flex;
-    justify-content:space-around;
-    padding:10px 5px 9px;
-    z-index:50;
-}
+const existing=cart.find(item=>item.id===id);
 
-.nav-item{
-    border:none;
-    background:none;
-    color:#777;
-    font-size:10px;
-    display:flex;
-    flex-direction:column;
-    align-items:center;
-    gap:4px;
+if(existing){
+existing.qty+=qty;
+}else{
+cart.push({
+id:id,
+qty:qty
+});
 }
 
-.nav-item span:first-child{
-    font-size:21px;
-}
+saveCart(cart);
 
-.nav-item.active{
-    color:var(--orange);
-    font-weight:bold;
-}
+showToast(`${food.name} added to Smart Tray`);
 
-.cart-float{
-    position:fixed;
-    bottom:72px;
-    right:calc(50% - 195px);
-    background:var(--orange);
-    color:white;
-    border:0;
-    width:58px;
-    height:58px;
-    border-radius:50%;
-    box-shadow:0 5px 20px rgba(255,90,0,.35);
-    z-index:60;
-    font-size:23px;
 }
 
-.cart-count{
-    position:absolute;
-    right:-2px;
-    top:-3px;
-    background:#222;
-    color:#fff;
-    font-size:11px;
-    width:20px;
-    height:20px;
-    border-radius:50%;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-}
 
-/* SCREEN */
+function removeFromCart(id){
 
-.screen{
-    display:none;
-}
+let cart=getCart();
 
-.screen.active{
-    display:block;
-}
+cart=cart.filter(item=>item.id!==id);
 
-.page-header{
-    padding:20px 17px;
-    display:flex;
-    align-items:center;
-    gap:15px;
-    border-bottom:1px solid #eee;
-}
+saveCart(cart);
 
-.back{
-    border:0;
-    background:none;
-    font-size:24px;
-}
+renderCart();
 
-.page-header h2{
-    font-size:19px;
 }
 
-/* PRODUCT */
 
-.product-page{
-    padding-bottom:100px;
-}
-
-.product-hero{
-    width:100%;
-    height:245px;
-    object-fit:cover;
-}
+function changeQty(id,amount){
 
-.product-body{
-    padding:20px;
-}
+const cart=getCart();
 
-.product-title-row{
-    display:flex;
-    justify-content:space-between;
-    gap:15px;
-}
+const item=cart.find(item=>item.id===id);
 
-.product-title{
-    font-size:24px;
-}
+if(!item)return;
 
-.big-price{
-    color:#e54e00;
-    font-size:22px;
-    font-weight:800;
-}
+item.qty+=amount;
 
-.description{
-    color:#777;
-    margin:8px 0 22px;
-    line-height:1.5;
+if(item.qty<=0){
+removeFromCart(id);
+return;
 }
 
-.option-box{
-    margin-top:15px;
-}
+saveCart(cart);
 
-.option-box h3{
-    font-size:15px;
-    margin-bottom:10px;
-}
+renderCart();
 
-.option{
-    border:1px solid #eee;
-    padding:13px;
-    border-radius:12px;
-    margin-bottom:8px;
 }
 
-.option input{
-    margin-right:8px;
-    accent-color:var(--orange);
-}
 
-.quantity{
-    display:flex;
-    align-items:center;
-    gap:15px;
-    margin:18px 0;
-}
+function getTotals(){
 
-.qty-btn{
-    width:38px;
-    height:38px;
-    border:none;
-    background:#fff0e8;
-    color:var(--orange);
-    border-radius:11px;
-    font-size:20px;
-}
+const cart=getCart();
 
-.main-btn{
-    width:100%;
-    border:none;
-    background:var(--orange);
-    color:#fff;
-    padding:16px;
-    border-radius:14px;
-    font-weight:bold;
-}
+const subtotal=cart.reduce((sum,item)=>{
 
-/* CART */
+const food=FOODS[item.id];
 
-.cart-page{
-    padding-bottom:100px;
-}
+return sum+(food.price*item.qty);
 
-.cart-items{
-    padding:15px;
-}
+},0);
 
-.cart-item{
-    display:flex;
-    align-items:center;
-    gap:10px;
-    border-bottom:1px solid #eee;
-    padding:12px 0;
-}
+const service=cart.length ? 2 : 0;
 
-.cart-item img{
-    width:62px;
-    height:58px;
-    border-radius:11px;
-    object-fit:cover;
-}
+return{
+subtotal,
+service,
+total:subtotal+service
+};
 
-.cart-info{
-    flex:1;
 }
 
-.cart-info h3{
-    font-size:14px;
-}
 
-.cart-info small{
-    color:#888;
-}
+function renderCart(){
 
-.mini-controls{
-    display:flex;
-    align-items:center;
-    gap:7px;
-    margin-top:7px;
-}
+const box=document.getElementById("cartItems");
 
-.mini-controls button{
-    width:27px;
-    height:27px;
-    border:1px solid #ddd;
-    border-radius:7px;
-    background:#fff;
-}
+const summary=document.getElementById("cartSummary");
 
-.delete-btn{
-    border:none!important;
-    color:#d00;
-    background:none!important;
-}
+if(!box)return;
 
-.bill{
-    margin:10px 15px;
-    background:#fff6d8;
-    border-radius:15px;
-    padding:16px;
-}
+const cart=getCart();
 
-.bill-row{
-    display:flex;
-    justify-content:space-between;
-    margin:8px 0;
-    color:#666;
-}
+if(!cart.length){
 
-.grand{
-    border-top:1px solid #e6d89c;
-    padding-top:12px;
-    margin-top:10px;
-    font-size:18px;
-    font-weight:bold;
-    color:#df4d00;
-}
+box.innerHTML=`
+<div class="success-card">
+<div class="success-icon">🛒</div>
+<h2>Your Smart Tray is empty</h2>
+<p>Add something delicious from today's menu.</p>
+<a href="menu.html" class="btn primary">Explore Menu</a>
+</div>`;
 
-/* CHECKOUT */
+if(summary)summary.innerHTML="";
 
-.form-page{
-    padding:20px 17px 100px;
-}
+return;
 
-.progress{
-    display:flex;
-    justify-content:space-between;
-    margin-bottom:25px;
 }
 
-.progress-item{
-    text-align:center;
-    font-size:11px;
-    color:#999;
-    position:relative;
-}
 
-.progress-item.active{
-    color:var(--orange);
-    font-weight:bold;
-}
+box.innerHTML=cart.map(item=>{
 
-.progress-circle{
-    width:28px;
-    height:28px;
-    border-radius:50%;
-    background:#eee;
-    display:flex;
-    justify-content:center;
-    align-items:center;
-    margin:auto auto 5px;
-}
+const food=FOODS[item.id];
 
-.progress-item.active .progress-circle{
-    background:var(--orange);
-    color:#fff;
-}
+return`
+<div class="cart-row">
 
-.delivery-options{
-    display:flex;
-    gap:10px;
-    margin:15px 0;
-}
+<div class="cart-img">${food.emoji}</div>
 
-.delivery-option{
-    flex:1;
-    border:1px solid #ddd;
-    padding:15px 8px;
-    border-radius:14px;
-    text-align:center;
-}
+<div class="cart-info">
+<h3>${food.name}</h3>
+<p>₹${food.price} × ${item.qty}</p>
+</div>
 
-.delivery-option.selected{
-    border:2px solid var(--orange);
-    background:#fff5ee;
-}
+<div class="cart-actions">
+<button onclick="changeQty('${item.id}',-1)">−</button>
+<b>${item.qty}</b>
+<button onclick="changeQty('${item.id}',1)">+</button>
+</div>
 
-.delivery-option input{
-    accent-color:var(--orange);
-}
+<strong>₹${food.price*item.qty}</strong>
 
-.input-group{
-    margin:15px 0;
-}
+<button onclick="removeFromCart('${item.id}')">✕</button>
 
-.input-group label{
-    display:block;
-    font-weight:bold;
-    font-size:13px;
-    margin-bottom:7px;
-}
+</div>`;
 
-.input-group input{
-    width:100%;
-    padding:13px;
-    border:1px solid #ddd;
-    border-radius:11px;
-    outline:none;
-}
+}).join("");
 
-.input-group input:focus{
-    border-color:var(--orange);
-}
 
-/* PAYMENT */
+const totals=getTotals();
 
-.payment-page{
-    padding:20px 17px 100px;
-}
+summary.innerHTML=`
 
-.amount-box{
-    background:var(--cream);
-    border-radius:16px;
-    padding:18px;
-    text-align:center;
-    margin-bottom:20px;
-}
+<div class="summary-line">
+<span>Food Total</span>
+<b>₹${totals.subtotal}</b>
+</div>
 
-.amount-box small{
-    color:#777;
-}
+<div class="summary-line">
+<span>Campus Service</span>
+<b>₹${totals.service}</b>
+</div>
 
-.amount-box h1{
-    margin-top:6px;
-}
+<div class="summary-total">
+<span>Grand Total</span>
+<strong>₹${totals.total}</strong>
+</div>
 
-.payment-method{
-    border:1px solid #ddd;
-    border-radius:14px;
-    padding:15px;
-    display:flex;
-    align-items:center;
-    gap:12px;
-    margin:10px 0;
-}
+<a href="checkout.html" class="btn primary full">
+Continue to Checkout →
+</a>
 
-.payment-method.selected{
-    border:2px solid var(--orange);
-    background:#fff7f1;
-}
+`;
 
-.payment-method input{
-    accent-color:var(--orange);
 }
 
-/* TRACKING */
 
-.tracking{
-    padding:20px 17px 100px;
-}
+function renderMenu(){
 
-.success{
-    background:#eafff2;
-    border-radius:17px;
-    text-align:center;
-    padding:25px;
-}
+const grid=document.getElementById("menuGrid");
 
-.success-icon{
-    font-size:45px;
-}
+if(!grid)return;
 
-.order-box{
-    margin-top:18px;
-    border:1px solid #eee;
-    border-radius:16px;
-    padding:17px;
-}
+const searchInput=document.getElementById("menuSearch");
 
-.timeline{
-    margin-top:20px;
-}
+let category="All";
 
-.timeline-item{
-    display:flex;
-    gap:15px;
-    min-height:65px;
-}
+function draw(){
 
-.timeline-dot{
-    width:27px;
-    height:27px;
-    border-radius:50%;
-    background:#eee;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-}
+const search=(searchInput?.value || "").toLowerCase();
 
-.timeline-item.done .timeline-dot{
-    background:var(--green);
-    color:#fff;
-}
+const foods=Object.values(FOODS).filter(food=>{
 
-.timeline-item.current .timeline-dot{
-    background:var(--orange);
-    color:#fff;
-}
+const categoryMatch=category==="All" || food.category===category;
 
-.timeline-item h3{
-    font-size:14px;
-}
+const searchMatch=
+food.name.toLowerCase().includes(search) ||
+food.description.toLowerCase().includes(search);
 
-.timeline-item p{
-    color:#888;
-    font-size:11px;
-    margin-top:3px;
-}
+return categoryMatch && searchMatch;
 
-.estimate{
-    margin-top:15px;
-    background:#fff8e8;
-    padding:16px;
-    border-radius:15px;
-}
+});
 
-/* EMPTY */
 
-.empty{
-    text-align:center;
-    padding:70px 20px;
-}
+grid.innerHTML=foods.map(food=>`
 
-.empty-icon{
-    font-size:55px;
-    margin-bottom:15px;
-}
+<div class="food-card">
 
-.empty p{
-    color:#888;
-    margin:8px 0 20px;
-}
+<a href="food.html?id=${food.id}">
 
-/* TOAST */
-
-.toast{
-    position:fixed;
-    left:50%;
-    transform:translateX(-50%) translateY(100px);
-    bottom:85px;
-    background:#222;
-    color:#fff;
-    padding:12px 18px;
-    border-radius:12px;
-    z-index:100;
-    transition:.3s;
-    font-size:13px;
-}
+<div class="food-img">${food.emoji}</div>
 
-.toast.show{
-    transform:translateX(-50%) translateY(0);
-}
+<div class="food-content">
 
-/* MODAL */
-
-.modal-bg{
-    position:fixed;
-    inset:0;
-    background:rgba(0,0,0,.55);
-    display:none;
-    align-items:flex-end;
-    justify-content:center;
-    z-index:90;
-}
+<span class="tag">${food.category}</span>
 
-.modal-bg.show{
-    display:flex;
-}
+<h3>${food.name}</h3>
 
-.modal{
-    width:100%;
-    max-width:430px;
-    background:#fff;
-    border-radius:25px 25px 0 0;
-    padding:22px;
-    max-height:85vh;
-    overflow:auto;
-}
+<p>${food.description}</p>
 
-.modal-close{
-    float:right;
-    border:none;
-    background:#eee;
-    width:32px;
-    height:32px;
-    border-radius:50%;
-}
+<div class="food-bottom">
 
-@media(min-width:700px){
-    .app{
-        min-height:100vh;
-    }
-
-    .bottom-nav{
-        position:fixed;
-    }
-}
-</style>
-</head>
-
-<body>
-
-<div class="app">
-
-<!-- ================= HOME ================= -->
-
-<section id="homeScreen" class="screen active">
-
-<header>
-    <div class="brand-row">
-        <div class="logo">
-            <div class="logo-icon">🍴</div>
-            Quick Bytes
-        </div>
-        <div class="profile">S</div>
-    </div>
-
-    <div class="greeting">
-        <small>Good Afternoon 👋</small>
-        <h1>What would you<br>like to eat today?</h1>
-    </div>
-
-    <div class="search-box">
-        🔍
-        <input id="homeSearch" type="text" placeholder="Search food...">
-    </div>
-</header>
-
-<div class="content">
-
-    <div class="table-card">
-        <div class="table-left">
-            <div class="table-icon">🪑</div>
-            <div>
-                <small>Table Number</small>
-                <strong id="tableDisplay">T-12</strong>
-            </div>
-        </div>
-        <button class="change-btn" onclick="changeTable()">Change</button>
-    </div>
-
-    <div class="section-title">
-        <h2>Quick Categories</h2>
-        <span onclick="showMenu()">See All</span>
-    </div>
-
-    <div class="categories">
-
-        <button class="category active" onclick="filterCategory('all',this)">
-            <span class="cat-icon">🍚</span>
-            <span>All</span>
-        </button>
-
-        <button class="category" onclick="filterCategory('rice',this)">
-            <span class="cat-icon">🍛</span>
-            <span>Rice</span>
-        </button>
-
-        <button class="category" onclick="filterCategory('meals',this)">
-            <span class="cat-icon">🍱</span>
-            <span>Meals</span>
-        </button>
-
-        <button class="category" onclick="filterCategory('puffs',this)">
-            <span class="cat-icon">🥐</span>
-            <span>Puffs</span>
-        </button>
-
-        <button class="category" onclick="filterCategory('drinks',this)">
-            <span class="cat-icon">🧃</span>
-            <span>Drinks</span>
-        </button>
-
-    </div>
-
-    <div class="smart-pick">
-        <div class="smart-label">🔥 Smart Pick</div>
-
-        <div class="pick-card">
-
-            <img class="food-img"
-                 src="https://images.unsplash.com/photo-1601050690597-df0568f70950?auto=format&fit=crop&w=300&q=80">
-
-            <div class="pick-info">
-                <h3>Chicken Biryani</h3>
-                <p>Student favourite</p>
-                <div class="price">₹80</div>
-            </div>
-
-            <button class="add-btn" onclick="addToCart('biryani')">
-                Add
-            </button>
-
-        </div>
-    </div>
-
-    <div class="live-card">
-        <div class="live-dot"></div>
-        <div>
-            <strong>Canteen Live</strong>
-            <small id="liveText">Average preparation time: 12 min</small>
-        </div>
-        <div class="status-pill">Medium</div>
-    </div>
-
-    <div class="section-title">
-        <h2>Popular Today</h2>
-        <span id="resultCount"></span>
-    </div>
-
-    <div id="homeFoodList" class="food-list"></div>
+<strong>₹${food.price}</strong>
 
 </div>
 
-</section>
-
-
-<!-- ================= MENU ================= -->
-
-<section id="menuScreen" class="screen">
-
-<div class="page-header">
-    <button class="back" onclick="goHome()">‹</button>
-    <h2>Today's Menu</h2>
 </div>
 
-<div class="content">
+</a>
 
-    <div class="search-box" style="margin-top:0;border:1px solid #eee;">
-        🔍
-        <input id="menuSearch" type="text" placeholder="Search food...">
-    </div>
+<div class="food-content" style="padding-top:0">
 
-    <div class="categories" style="margin:18px 0;">
-        <button class="category active" onclick="filterMenu('all',this)">All</button>
-        <button class="category" onclick="filterMenu('rice',this)">Rice</button>
-        <button class="category" onclick="filterMenu('meals',this)">Meals</button>
-        <button class="category" onclick="filterMenu('puffs',this)">Puffs</button>
-        <button class="category" onclick="filterMenu('drinks',this)">Drinks</button>
-    </div>
-
-    <div class="section-title">
-        <h2>Our Special Items</h2>
-    </div>
-
-    <div id="menuFoodList" class="food-list"></div>
-
-</div>
-
-</section>
-
-
-<!-- ================= PRODUCT ================= -->
-
-<section id="productScreen" class="screen product-page">
-
-<div class="page-header">
-    <button class="back" onclick="goBackFromProduct()">‹</button>
-    <h2>Food Details</h2>
-</div>
-
-<div id="productContent"></div>
-
-</section>
-
-
-<!-- ================= CART ================= -->
-
-<section id="cartScreen" class="screen cart-page">
-
-<div class="page-header">
-    <button class="back" onclick="goHome()">‹</button>
-    <h2>Smart Tray 🛒</h2>
-</div>
-
-<div id="cartContent"></div>
-
-</section>
-
-
-<!-- ================= CHECKOUT ================= -->
-
-<section id="checkoutScreen" class="screen">
-
-<div class="page-header">
-    <button class="back" onclick="showCart()">‹</button>
-    <h2>Checkout</h2>
-</div>
-
-<div class="form-page">
-
-<div class="progress">
-    <div class="progress-item active">
-        <div class="progress-circle">1</div>
-        Location
-    </div>
-
-    <div class="progress-item">
-        <div class="progress-circle">2</div>
-        Details
-    </div>
-
-    <div class="progress-item">
-        <div class="progress-circle">3</div>
-        Payment
-    </div>
-</div>
-
-<h2>Where should we bring your food?</h2>
-
-<div class="delivery-options">
-
-    <label class="delivery-option selected" id="tableDelivery">
-        <input type="radio"
-               name="delivery"
-               value="table"
-               checked
-               onchange="selectDelivery('table')">
-        <div style="font-size:27px;">🪑</div>
-        <strong>Table Delivery</strong>
-        <small>We'll bring it to your table</small>
-    </label>
-
-    <label class="delivery-option" id="counterPickup">
-        <input type="radio"
-               name="delivery"
-               value="counter"
-               onchange="selectDelivery('counter')">
-        <div style="font-size:27px;">🚶</div>
-        <strong>Counter Pickup</strong>
-        <small>Collect when ready</small>
-    </label>
-
-</div>
-
-<div class="input-group">
-    <label>Table Number</label>
-    <input id="checkoutTable" value="T-12">
-</div>
-
-<div class="input-group">
-    <label>Student Name</label>
-    <input id="studentName" placeholder="Enter your name">
-</div>
-
-<div class="input-group">
-    <label>Register Number</label>
-    <input id="registerNumber" placeholder="Enter register number">
-</div>
-
-<button class="main-btn" onclick="continueToPayment()">
-    Continue to Payment →
+<button class="small-btn"
+onclick="addToCart('${food.id}')">
++ Add
 </button>
 
 </div>
 
-</section>
-
-
-<!-- ================= PAYMENT ================= -->
-
-<section id="paymentScreen" class="screen">
-
-<div class="page-header">
-    <button class="back" onclick="showCheckout()">‹</button>
-    <h2>Payment 🔒</h2>
 </div>
 
-<div class="payment-page">
+`).join("");
 
-<div class="amount-box">
-    <small>Amount to Pay</small>
-    <h1 id="paymentAmount">₹0</h1>
+}
+
+
+document.querySelectorAll(".chip").forEach(chip=>{
+
+chip.addEventListener("click",()=>{
+
+document.querySelectorAll(".chip").forEach(c=>c.classList.remove("active"));
+
+chip.classList.add("active");
+
+category=chip.dataset.cat;
+
+draw();
+
+});
+
+});
+
+
+searchInput?.addEventListener("input",draw);
+
+draw();
+
+}
+
+
+function renderFoodDetails(){
+
+const box=document.getElementById("foodDetails");
+
+if(!box)return;
+
+const params=new URLSearchParams(location.search);
+
+const id=params.get("id") || "biryani";
+
+const food=FOODS[id] || FOODS.biryani;
+
+let qty=1;
+
+box.innerHTML=`
+
+<div class="detail-image">${food.emoji}</div>
+
+<div class="detail-content">
+
+<span class="tag">${food.category}</span>
+
+<h1>${food.name}</h1>
+
+<p>${food.description}</p>
+
+<div class="detail-price">₹${food.price}</div>
+
+<div class="qty">
+
+<button id="minus">−</button>
+
+<span id="foodQty">1</span>
+
+<button id="plus">+</button>
+
 </div>
 
-<h3>Choose Payment Method</h3>
+<button id="detailAdd" class="btn primary full">
+Add to Smart Tray
+</button>
 
-<label class="payment-method selected" onclick="selectPayment(this)">
-    <input type="radio" name="payment" checked value="upi">
-    <div>
-        <strong>UPI</strong>
-        <small style="display:block;color:#888;">
-            Google Pay · PhonePe · Paytm
-        </small>
-    </div>
-    ✓
-</label>
+</div>
+`;
 
-<label class="payment-method" onclick="selectPayment(this)">
-    <input type="radio" name="payment" value="card">
-    <div>
-        <strong>Card</strong>
-        <small style="display:block;color:#888;">
-            Debit / Credit Card
-        </s
+
+document.getElementById("minus").onclick=()=>{
+
+if(qty>1)qty--;
+
+document.getElementById("foodQty").textContent=qty;
+
+};
+
+
+document.getElementById("plus").onclick=()=>{
+
+qty++;
+
+document.getElementById("foodQty").textContent=qty;
+
+};
+
+
+document.getElementById("detailAdd").onclick=()=>{
+
+addToCart(food.id,qty);
+
+};
+
+}
+
+
+function changeTable(){
+
+const table=prompt("Enter your table number","T-12");
+
+if(!table)return;
+
+const value=table.toUpperCase();
+
+localStorage.setItem("qb_table",value);
+
+document.querySelectorAll("#currentTable,#heroTable").forEach(el=>{
+el.textContent=`Table ${value.replace("TABLE ","")}`;
+});
+
+showToast(`Dining spot changed to ${value}`);
+
+}
+
+
+function loadTable(){
+
+const table=localStorage.getItem("qb_table") || "T-12";
+
+document.querySelectorAll("#currentTable,#heroTable").forEach(el=>{
+el.textContent=`Table ${table.replace("TABLE ","")}`;
+});
+
+}
+
+
+function checkout(){
+
+const form=document.getElementById("checkoutForm");
+
+if(!form)return;
+
+const profile=JSON.parse(localStorage.getItem("qb_profile") || "{}");
+
+const table=localStorage.getItem("qb_table");
+
+if(profile.name){
+document.getElementById("studentName").value=profile.name;
+}
+
+if(profile.reg){
+document.getElementById("registerNo").value=profile.reg;
+}
+
+if(table){
+document.getElementById("tableNo").value=table;
+}
+
+
+form.addEventListener("submit",e=>{
+
+e.preventDefault();
+
+if(!getCart().length){
+
+showToast("Your Smart Tray is empty");
+
+return;
+
+}
+
+
+const details={
+
+name:document.getElementById("studentName").value.trim(),
+
+reg:document.getElementById("registerNo").value.trim(),
+
+table:document.getElementById("tableNo").value,
+
+note:document.getElementById("note").value.trim()
+
+};
+
+localStorage.setItem("qb_checkout",JSON.stringify(details));
+
+localStorage.setItem("qb_table",details.table);
+
+location.href="payment.html";
+
+});
+
+}
+
+
+function renderPayment(){
+
+const summary=document.getElementById("paymentSummary");
+
+if(!summary)return;
+
+const totals=getTotals();
+
+summary.innerHTML=`
+
+<h2>Order Summary</h2>
+
+${getCart().map(item=>{
+
+const food=FOODS[item.id];
+
+return`
+<div class="summary-line">
+<span>${food.name} × ${item.qty}</span>
+<b>₹${food.price*item.qty}</b>
+</div>`;
+
+}).join("")}
+
+<div class="summary-line">
+<span>Campus Service</span>
+<b>₹${totals.service}</b>
+</div>
+
+<div class="summary-total">
+<span>Total</span>
+<strong>₹${totals.total}</strong>
+</div>
+
+`;
+
+
+document.getElementById("placeOrderBtn")?.addEventListener("click",placeOrder);
+
+}
+
+
+function placeOrder(){
+
+const checkout=JSON.parse(localStorage.getItem("qb_checkout") || "{}");
+
+const payment=document.querySelector("input[name='payment']:checked")?.value || "UPI";
+
+const cart=getCart();
+
+if(!cart.length){
+
+showToast("Your Smart Tray is empty");
+
+return;
+
+}
+
+
+const totals=getTotals();
+
+const order={
+
+id:"QB"+Date.now().toString().slice(-6),
+
+date:new Date().toLocaleString(),
+
+items:cart,
+
+name:checkout.name || "Campus Student",
+
+reg:checkout.reg || "",
+
+table:checkout.table || localStorage.getItem("qb_table") || "T-12",
+
+note:checkout.note || "",
+
+payment:payment,
+
+subtotal:totals.subtotal,
+
+service:totals.service,
+
+total:totals.total,
+
+status:0
+
+};
+
+
+const orders=JSON.parse(localStorage.getItem("qb_orders") || "[]");
+
+orders.unshift(order);
+
+localStorage.setItem("qb_orders",JSON.stringify(orders));
+
+localStorage.setItem("qb_current_order",order.id);
+
+localStorage.setItem("qb_cart","[]");
+
+location.href="confirmation.html";
+
+}
+
+
+function renderConfirmation(){
+
+const box=document.getElementById("confirmationInfo");
+
+if(!box)return;
+
+const orders=JSON.parse(localStorage.getItem("qb_orders") || "[]");
+
+const order=orders[0];
+
+if(!order){
+
+box.innerHTML="<p>No recent order found.</p>";
+
+return;
+
+}
+
+box.innerHTML=`
+
+<div class="summary-card">
+
+<div class="summary-line">
+<span>Order ID</span>
+<b>${order.id}</b>
+</div>
+
+<div class="summary-line">
+<span>Dining Table</span>
+<b>${order.table}</b>
+</div>
+
+<div class="summary-line">
+<span>Payment</span>
+<b>${order.payment}</b>
+</div>
+
+<div class="summary-total">
+<span>Total Paid</span>
+<strong>₹${order.total}</strong>
+</div>
+
+</div>
+
+`;
+
+}
+
+
+const STATUSES=[
+"Order Placed",
+"Preparing",
+"Ready",
+"Delivered"
+];
+
+
+function renderTracking(){
+
+const box=document.getElementById("trackingCard");
+
+if(!box)return;
+
+const orders=JSON.parse(localStorage.getItem("qb_orders") || "[]");
+
+const order=orders[0];
+
+if(!order){
+
+box.innerHTML=`
+<div class="success-card">
+<h2>No active order</h2>
+<a href="menu.html" class="btn primary">Order Food</a>
+</div>`;
+
+return;
+
+}
+
+
+document.getElementById("trackingId").textContent=
+`${order.id} · ${order.table}`;
+
+
+box.innerHTML=STATUSES.map((status,index)=>{
+
+const done=index<=order.status;
+
+const current=index===order.status;
+
+return`
+
+<div class="track-item ${done?"done":""} ${current?"current":""}">
+
+<div class="track-icon">
+${done ? "✓" : index+1}
+</div>
+
+${index<STATUSES.length-1 ? `<div class="track-line"></div>` : ""}
+
+<div class="track-text">
+
+<h3>${status}</h3>
+
+<p>${
+index<order.status
+?"Completed"
+:
+index===order.status
+?"Current status"
+:"Waiting"
+}</p>
+
+</div>
+
+</div>`;
+
+}).join("");
+
+
+const button=document.getElementById("nextStatus");
+
+if(order.status>=STATUSES.length-1){
+
+button.textContent="Order Delivered ✓";
+
+button.disabled=true;
+
+}else{
+
+button.textContent=`Move to "${STATUSES[order.status+1]}"`;
+
+button.disabled=false;
+
+button.onclick=()=>{
+
+order.status++;
+
+localStorage.setItem("qb_orders",JSON.stringify(orders));
+
+renderTracking();
+
+showToast(STATUSES[order.status]);
+
+};
+
+}
+
+}
+
+
+function renderOrders(){
+
+const box=document.getElementById("ordersList");
+
+if(!box)return;
+
+const orders=JSON.parse(localStorage.getItem("qb_orders") || "[]");
+
+if(!orders.length){
+
+box.innerHTML=`
+<div class="success-card">
+<div class="success-icon">📦</div>
+<h2>No orders yet</h2>
+<p>Your Quick Bytes orders will appear here.</p>
+<a class="btn primary" href="menu.html">Explore Menu</a>
+</div>`;
+
+return;
+
+}
+
+
+box.innerHTML=orders.map(order=>{
+
+const status=STATUSES[order.status];
+
+const items=order.items.map(item=>{
+
+return `${FOODS[item.id].name} × ${item.qty}`;
+
+}).join(", ");
+
+
+return`
+
+<div class="order-card">
+
+<div class="order-head">
+
+<div>
+<b>${order.id}</b>
+<small>${order.date}</small>
+</div>
+
+<span class="order-status">${status}</span>
+
+</div>
+
+<div class="order-items">
+${items}
+</div>
+
+<div class="order-footer">
+
+<strong>₹${order.total}</strong>
+
+<a href="tracking.html" class="btn outline">
+Track
+</a>
+
+</div>
+
+</div>
+
+`;
+
+}).join("");
+
+}
+
+
+function loadProfile(){
+
+const profile=JSON.parse(localStorage.getItem("qb_profile") || "{}");
+
+const nameInput=document.getElementById("profileNameInput");
+
+const regInput=document.getElementById("profileRegInput");
+
+const tableInput=document.getElementById("profileTable");
+
+if(!nameInput)return;
+
+nameInput.value=profile.name || "";
+
+regInput.value=profile.reg || "";
+
+tableInput.value=profile.table || "T-12";
+
+document.getElementById("profileName").textContent=
+profile.name || "Campus Student";
+
+document.getElementById("profileReg").textContent=
+profile.reg || "Register number not added";
+
+
+document.getElementById("saveProfile").onclick=()=>{
+
+const data={
+
+name:nameInput.value.trim(),
+
+reg:regInput.value.trim(),
+
+table:tableInput.value
+
+};
+
+localStorage.setItem("qb_profile",JSON.stringify(data));
+
+localStorage.setItem("qb_table",data.table);
+
+document.getElementById("profileName").textContent=
+data.name || "Campus Student";
+
+document.getElementById("profileReg").textContent=
+data.reg || "Register number not added";
+
+showToast("Profile saved successfully");
+
+};
+
+}
+
+
+function feedback(){
+
+const form=document.getElementById("feedbackForm");
+
+if(!form)return;
+
+form.addEventListener("submit",e=>{
+
+e.preventDefault();
+
+const rating=document.querySelector("input[name='rating']:checked")?.value || 3;
+
+const text=document.getElementById("feedbackText").value;
+
+localStorage.setItem("qb_feedback",JSON.stringify({
+rating,
+text,
+date:new Date().toLocaleString()
+}));
+
+form.classList.add("hidden");
+
+document.getElementById("feedbackSuccess").classList.remove("hidden");
+
+});
+
+}
+
+
+document.addEventListener("DOMContentLoaded",()=>{
+
+updateCartCount();
+
+loadTable();
+
+renderMenu();
+
+renderFoodDetails();
+
+renderCart();
+
+checkout();
+
+renderPayment();
+
+renderConfirmation();
+
+renderTracking();
+
+renderOrders();
+
+loadProfile();
+
+feedback();
+
+});
